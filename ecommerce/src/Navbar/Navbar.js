@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; // Import useState
+import React, { useState } from 'react'; 
 import './NavBar.css';
 import { Navbar, Nav, Container, Row, Col, Form } from 'react-bootstrap';
 import NavDropdown from 'react-bootstrap/NavDropdown';
@@ -19,7 +19,7 @@ const NavBar = () => {
     return (
         <Container fluid>
             <Row className='navbar'>
-                <Col xs={6}><span style={{ fontSize: "12px" }}>Welcome to BigStore!</span></Col>
+                <Col xs={6}><span style={{ fontSize: "12px" }}>Welcome to ImpressicoStore!</span></Col>
                 <Col xs={6}><div className="social-icons">
                     <a href="#"><i className="fab fa-facebook"></i></a>
                     <a href="#"><i className="fab fa-pinterest"></i></a>
