@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Navbar, Nav, Container, Row, Col, Carousel } from 'react-bootstrap';
+import { Navbar, Nav, Container, Row, Col, Carousel, Button } from 'react-bootstrap';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import '../components/ProductCard.css';
 
@@ -11,7 +11,7 @@ const products = [
         originalPrice: 1000,
         discountedPrice: 999,
         rating: 3,
-        discount: '999.00'
+        discount: '1.00',
     },
     {
         image: 'https://wpthemes.themehunk.com/big-store-electro/wp-content/uploads/sites/164/2020/07/product27-320x320.png',
@@ -19,72 +19,122 @@ const products = [
         originalPrice: 1000,
         discountedPrice: 999,
         rating: 4,
-        discount: '129.00'
+        discount: '1.00',
     },
     {
         image: 'https://150698241.v2.pressablecdn.com/big-store-electro/wp-content/uploads/sites/164/2020/07/products11-320x320.png',
         title: 'Suspendisse vehicula at dui',
-        originalPrice: 56,
+        originalPrice: 156,
         discountedPrice: 56,
         rating: 5,
-        discount: '99.00'
-
+        discount: '100.00',
     },
     {
         image: 'https://150698241.v2.pressablecdn.com/big-store-electro/wp-content/uploads/sites/164/2020/07/product15-320x320.png',
         title: 'Fusce nec diam et dolor',
         originalPrice: 45,
         discountedPrice: 40,
-        rating: 0,
-        discount: '5.00'
+        rating: 2,
+        discount: '5.00',
     },
     {
         image: 'https://150698241.v2.pressablecdn.com/big-store-electro/wp-content/uploads/sites/164/2020/07/product16-320x320.png',
         title: 'Donec ullamcorper turpis',
         originalPrice: 45,
         discountedPrice: 42,
-        rating: 0,
-        discount: '3.00'
+        rating: 3,
+        discount: '3.00',
     },
     {
         image: 'https://150698241.v2.pressablecdn.com/big-store-electro/wp-content/uploads/sites/164/2020/07/product19-320x320.png',
         title: 'Aenean non pellentesque mauris',
         originalPrice: 1000,
         discountedPrice: 999,
-        rating: 0,
-        discount: '1000.00'
+        rating: 4,
+        discount: '1.00',
     },
     {
         image: 'https://150698241.v2.pressablecdn.com/big-store-electro/wp-content/uploads/sites/164/2020/07/product1-320x320.png',
         title: 'Pellentesque dignissim sapien...',
-        originalPrice: 0,
+        originalPrice: 530,
         discountedPrice: 78,
-        rating: 0
+        rating: 1,
+        discount: '452.00',
     },
     {
         image: 'https://150698241.v2.pressablecdn.com/big-store-electro/wp-content/uploads/sites/164/2020/07/product10-320x320.png',
         title: 'Curabitur ultricies ante ultricies...',
         originalPrice: 1110,
         discountedPrice: 45,
-        rating: 0,
-        discount: '10.00'
+        rating: 5,
+        discount: '1065.00',
     },
     {
         image: 'https://150698241.v2.pressablecdn.com/big-store-electro/wp-content/uploads/sites/164/2020/07/product6-320x320.png',
         title: 'Morbi varius ligula eget ante',
         originalPrice: 55,
         discountedPrice: 45,
-        rating: 0,
-        discount: '10.00'
+        rating: 3,
+        discount: '10.00',
     },
     {
         image: 'https://150698241.v2.pressablecdn.com/big-store-electro/wp-content/uploads/sites/164/2020/07/product7-320x320.png',
         title: 'Mauris elit magna, aliquet',
         originalPrice: 210,
         discountedPrice: 50,
-        rating: 0
+        rating: 4,
+        discount: '160.00',
+    },
+    {
+        image: 'https://150698241.v2.pressablecdn.com/big-store-electro/wp-content/uploads/sites/164/2020/07/product8-320x320.png',
+        title: 'Vivamus luctus urna sed urna',
+        originalPrice: 150,
+        discountedPrice: 120,
+        rating: 5,
+        discount: '30.00',
+    },
+    {
+        image: 'https://150698241.v2.pressablecdn.com/big-store-electro/wp-content/uploads/sites/164/2020/07/product9-320x320.png',
+        title: 'Nunc feugiat mi a tellus',
+        originalPrice: 90,
+        discountedPrice: 70,
+        rating: 2,
+        discount: '20.00',
+    },
+    {
+        image: 'https://150698241.v2.pressablecdn.com/big-store-electro/wp-content/uploads/sites/164/2020/07/product12-320x320.png',
+        title: 'Vestibulum ante ipsum primis',
+        originalPrice: 120,
+        discountedPrice: 95,
+        rating: 4,
+        discount: '25.00',
+    },
+    {
+        image: 'https://150698241.v2.pressablecdn.com/big-store-electro/wp-content/uploads/sites/164/2020/07/product13-320x320.png',
+        title: 'In faucibus orci luctus et',
+        originalPrice: 80,
+        discountedPrice: 60,
+        rating: 3,
+        discount: '20.00',
+    },
+    {
+        image: 'https://150698241.v2.pressablecdn.com/big-store-electro/wp-content/uploads/sites/164/2020/07/product14-320x320.png',
+        title: 'Etiam feugiat lorem non metus',
+        originalPrice: 200,
+        discountedPrice: 180,
+        rating: 5,
+        discount: '20.00',
+    },
+    {
+        image: 'https://150698241.v2.pressablecdn.com/big-store-electro/wp-content/uploads/sites/164/2020/07/product20-320x320.png',
+        title: 'Phasellus viverra nulla ut',
+        originalPrice: 220,
+        discountedPrice: 200,
+        rating: 2,
+        discount: '20.00',
     }
 ];
+
 
 
 
@@ -137,8 +187,8 @@ const ProductCard = () => {
     const [categoryCurrentSlide, setCategoryCurrentSlide] = useState(0);
     const [saleProduct, setSaleProduct] = useState(0);
 
-    const techTotalSlides = Math.ceil(products.length / 8); // 4 items per row, 2 rows per slide
-    const categoryTotalSlides = Math.ceil(Category.length / 6); // 6 items per slide
+    const techTotalSlides = Math.ceil(products.length / 8);
+    const categoryTotalSlides = Math.ceil(Category.length / 6);
 
     const handleNavClick = (link) => setActiveLink(link);
     const handleSelectTech = (selectedIndex) => setTechCurrentSlide(selectedIndex);
@@ -183,7 +233,7 @@ const ProductCard = () => {
                                                     {link.replace('#', '')}
                                                 </Nav.Link>
                                             ))}
-                                            <div style={{ marginTop: "6px", marginRight: "6px" }}>
+                                            <div style={{ marginTop: "6px", marginRight: "6px", marginLeft: "50px" }}>
                                                 <button onClick={() => handlePrev(techCurrentSlide, setTechCurrentSlide, techTotalSlides)} style={buttonStyle}><i className="slick-nav fa fa-angle-left" /></button>
                                             </div>
                                             <div style={{ marginTop: "6px" }}>
@@ -204,24 +254,28 @@ const ProductCard = () => {
                                 {Array.from({ length: techTotalSlides }).map((_, slideIndex) => (
                                     <Carousel.Item key={slideIndex}>
                                         <Row>
-                                            {products.slice(slideIndex * 8, (slideIndex + 1) * 8).map((product, index) => (
-                                                <Col key={index} xs={12} sm={6} md={4} lg={3}>
-                                                    <div className="product-card">
-                                                        <img src={product.image} alt={product.title} className="product-image" />
-                                                        <div className="product-info">
-                                                            <span>{product.title}</span>
-                                                            <div className="product-pricing">
-                                                                {product.originalPrice > 0 && <span className="original-price">£{product.originalPrice}</span>}
-                                                                <span className="discounted-price">£{product.discountedPrice}</span>
-                                                            </div>
-                                                            {product.discount && <div className="discount">-{product.discount}</div>}
-                                                            <div className="rating">
-                                                                {'★'.repeat(product.rating)}{'☆'.repeat(5 - product.rating)}
+                                            {products.slice(slideIndex * 8, (slideIndex + 1) * 8).map((product, index) => {
+                                                const discount = product.discount || '0.00'; // Set default value if discount is undefined
+                                                console.log(product);
+                                                return (
+                                                    <Col key={index} xs={12} sm={6} md={4} lg={3}>
+                                                        <div className="product-card">
+                                                            <img src={product.image} alt={product.title} className="product-image" />
+                                                            <div className="product-info">
+                                                                <span>{product.title}</span>
+                                                                <div className="product-pricing">
+                                                                    {product.originalPrice > 0 && <span className="original-price">£{product.originalPrice}</span>}
+                                                                    <span className="discounted-price">£{product.discountedPrice}</span>
+                                                                </div>
+                                                                <div className="discount">--£{discount}</div>
+                                                                <div className="rating">
+                                                                    {'★'.repeat(product.rating)}{'☆'.repeat(5 - product.rating)}
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </Col>
-                                            ))}
+                                                    </Col>
+                                                );
+                                            })}
                                         </Row>
                                     </Carousel.Item>
                                 ))}
@@ -229,6 +283,7 @@ const ProductCard = () => {
                         </div>
                     </Container>
                 </Row>
+
             </Container>
             <Container fluid>
                 <Row className="Product-dropdown-row">
@@ -284,6 +339,9 @@ const ProductCard = () => {
                         <Container style={{ marginTop: "100px" }}>
                             <div style={{ textAlign: "center", color: "white" }}>
                                 <h5>Work Like a Professional, With Best in its Class</h5>
+                            </div>
+                            <div>
+                                <Button variant="warning">Check Out</Button>
                             </div>
                         </Container>
                     </Col>

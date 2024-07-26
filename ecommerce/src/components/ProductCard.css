@@ -46,10 +46,17 @@
   .discount {
     background-color: #000;
     color: #fff;
-    padding: 4px 8px;
+    padding: 10px;
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 12px;
+    left: 8px;
+    border-radius:3px;
+    line-height: normal;
+    min-height: auto;
+    min-width: auto;
+    margin: 0;
+    font-size: 8px;
+
   }
   
   .rating {

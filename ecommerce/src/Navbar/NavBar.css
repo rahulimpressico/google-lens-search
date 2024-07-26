@@ -105,13 +105,15 @@
   }
 
   .category span{
-    margin-left: 280px;
+    margin-left: 320px;
     margin-top: 10px;
     padding-bottom: 10px;
+
   }
 
   .link a {
     color: white; 
+    font-size: 15px;
 }
 
 .category-container {
