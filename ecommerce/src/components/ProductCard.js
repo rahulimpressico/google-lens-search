@@ -115,11 +115,6 @@ const Category = [
 
     },
     {
-        image: 'https://150698241.v2.pressablecdn.com/big-store-electro/wp-content/uploads/sites/164/2020/07/product19-320x320.png',
-        title: 'Aenean non pellentesque mauris',
-
-    },
-    {
         image: 'https://150698241.v2.pressablecdn.com/big-store-electro/wp-content/uploads/sites/164/2021/01/cate-phone.png',
         title: 'Smartphone',
 
@@ -134,67 +129,39 @@ const Category = [
         title: 'Watches',
 
     },
-    {
-        image: 'https://150698241.v2.pressablecdn.com/big-store-electro/wp-content/uploads/sites/164/2020/07/product7-320x320.png',
-        title: 'Mauris elit magna, aliquet',
-
-    }
 ];
 
 const ProductCard = () => {
     const [activeLink, setActiveLink] = useState("#home");
     const [techCurrentSlide, setTechCurrentSlide] = useState(0);
     const [categoryCurrentSlide, setCategoryCurrentSlide] = useState(0);
+    const [saleProduct, setSaleProduct] = useState(0);
 
-    const handleNavClick = (link) => {
-        setActiveLink(link);
+    const techTotalSlides = Math.ceil(products.length / 8); // 4 items per row, 2 rows per slide
+    const categoryTotalSlides = Math.ceil(Category.length / 6); // 6 items per slide
+
+    const handleNavClick = (link) => setActiveLink(link);
+    const handleSelectTech = (selectedIndex) => setTechCurrentSlide(selectedIndex);
+    const handleSelectCategory = (selectedIndex) => setCategoryCurrentSlide(selectedIndex);
+    const handleSelectSaleProduct = (selectedIndex) => setSaleProduct(selectedIndex);
+
+    const handlePrev = (currentSlide, setSlide, totalSlides) => {
+        setSlide(currentSlide === 0 ? totalSlides - 1 : currentSlide - 1);
     };
-
-    const handleSelectTech = (selectedIndex, e) => {
-        setTechCurrentSlide(selectedIndex);
-    };
-
-    const handleSelectCategory = (selectedIndex, e) => {
-        setCategoryCurrentSlide(selectedIndex);
-    };
-
-    const TechHandlePrev = () => {
-        const prevSlide = techCurrentSlide === 0 ? techTotalSlides - 1 : techCurrentSlide - 1;
-        setTechCurrentSlide(prevSlide);
-    };
-
-    const TechHandleNext = () => {
-        const nextSlide = techCurrentSlide === techTotalSlides - 1 ? 0 : techCurrentSlide + 1;
-        setTechCurrentSlide(nextSlide);
-    };
-
-    const CategoryHandlePrev = () => {
-        const prevSlide = categoryCurrentSlide === 0 ? categoryTotalSlides - 1 : categoryCurrentSlide - 1;
-        setCategoryCurrentSlide(prevSlide);
-    };
-
-    const CategoryHandleNext = () => {
-        const nextSlide = categoryCurrentSlide === categoryTotalSlides - 1 ? 0 : categoryCurrentSlide + 1;
-        setCategoryCurrentSlide(nextSlide);
+    const handleNext = (currentSlide, setSlide, totalSlides) => {
+        setSlide(currentSlide === totalSlides - 1 ? 0 : currentSlide + 1);
     };
 
     const linkStyle = (link) => ({
-        color: activeLink === link ? 'black' : 'grey', // Black if active, otherwise grey
+        color: activeLink === link ? 'black' : 'grey',
         textDecoration: 'none',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     });
-
-    const itemsPerRow = 4;
-    const rowsPerSlide = 2;
-    const itemsPerSlide = itemsPerRow * rowsPerSlide;
-    const techTotalSlides = Math.ceil(products.length / itemsPerSlide);
-    const categoryItemsPerSlide = 6; // Single row of 4 items each
-    const categoryTotalSlides = Math.ceil(products.length / categoryItemsPerSlide);
 
     return (
         <>
             <Container fluid>
-                <Row className='Product-dropdown-row'>
+                <Row className="Product-dropdown-row">
                     <Container>
                         <Row>
                             <Col xs={6}>
@@ -202,43 +169,25 @@ const ProductCard = () => {
                                     <h6 style={{ fontWeight: "bold" }}>Latest Tech</h6>
                                 </div>
                             </Col>
-                            <Col xs={6} className='link'>
+                            <Col xs={6} className="link">
                                 <Container fluid className="p-0">
                                     <Navbar expand="lg" className="p-2" style={{ backgroundColor: "white" }}>
                                         <Nav className="me-auto">
-                                            <Nav.Link
-                                                href="#home"
-                                                onClick={() => handleNavClick("#home")}
-                                                style={linkStyle("#home")}
-                                            >
-                                                Accessories
-                                            </Nav.Link>
-                                            <Nav.Link
-                                                href="#blog"
-                                                onClick={() => handleNavClick("#blog")}
-                                                style={linkStyle("#blog")}
-                                            >
-                                                Camera
-                                            </Nav.Link>
-                                            <Nav.Link
-                                                href="#shop"
-                                                onClick={() => handleNavClick("#shop")}
-                                                style={linkStyle("#shop")}
-                                            >
-                                                Headphones
-                                            </Nav.Link>
-                                            <Nav.Link
-                                                href="#accessories"
-                                                onClick={() => handleNavClick("#accessories")}
-                                                style={linkStyle("#accessories")}
-                                            >
-                                                Smart Watch
-                                            </Nav.Link>
+                                            {["#Accessories", "#Cameras", "#Headphones", "#Smart Watch"].map((link) => (
+                                                <Nav.Link
+                                                    key={link}
+                                                    href={link}
+                                                    onClick={() => handleNavClick(link)}
+                                                    style={linkStyle(link)}
+                                                >
+                                                    {link.replace('#', '')}
+                                                </Nav.Link>
+                                            ))}
                                             <div style={{ marginTop: "6px", marginRight: "6px" }}>
-                                                <button onClick={TechHandlePrev} style={{ background: "white", width: "25px", height: "25px", lineHeight: "25px", fontSize: "12px", color: "#ccc", border: "1px solid #ccc", borderRadius: "4px" }}><i className="slick-nav fa fa-angle-left" /></button>
+                                                <button onClick={() => handlePrev(techCurrentSlide, setTechCurrentSlide, techTotalSlides)} style={buttonStyle}><i className="slick-nav fa fa-angle-left" /></button>
                                             </div>
                                             <div style={{ marginTop: "6px" }}>
-                                                <button onClick={TechHandleNext} style={{ background: "white", width: "25px", height: "25px", lineHeight: "25px", fontSize: "12px", color: "#ccc", border: "1px solid #ccc", borderRadius: "4px" }}><i className="slick-nav fa fa-angle-right" /></button>
+                                                <button onClick={() => handleNext(techCurrentSlide, setTechCurrentSlide, techTotalSlides)} style={buttonStyle}><i className="slick-nav fa fa-angle-right" /></button>
                                             </div>
                                         </Nav>
                                     </Navbar>
@@ -248,23 +197,21 @@ const ProductCard = () => {
                         <hr style={{ margin: "0 18%", backgroundColor: "yellow", height: "2px", border: "none" }} />
                     </Container>
                 </Row>
-                <Row>
+                <Row style={{ backgroundColor: "white" }}>
                     <Container>
                         <div style={{ marginLeft: "17%", marginRight: "12%" }}>
                             <Carousel activeIndex={techCurrentSlide} onSelect={handleSelectTech} controls={false} indicators={false}>
                                 {Array.from({ length: techTotalSlides }).map((_, slideIndex) => (
                                     <Carousel.Item key={slideIndex}>
                                         <Row>
-                                            {products.slice(slideIndex * itemsPerSlide, (slideIndex + 1) * itemsPerSlide).map((product, index) => (
+                                            {products.slice(slideIndex * 8, (slideIndex + 1) * 8).map((product, index) => (
                                                 <Col key={index} xs={12} sm={6} md={4} lg={3}>
                                                     <div className="product-card">
                                                         <img src={product.image} alt={product.title} className="product-image" />
                                                         <div className="product-info">
                                                             <span>{product.title}</span>
                                                             <div className="product-pricing">
-                                                                {product.originalPrice > 0 && (
-                                                                    <span className="original-price">£{product.originalPrice}</span>
-                                                                )}
+                                                                {product.originalPrice > 0 && <span className="original-price">£{product.originalPrice}</span>}
                                                                 <span className="discounted-price">£{product.discountedPrice}</span>
                                                             </div>
                                                             {product.discount && <div className="discount">-{product.discount}</div>}
@@ -284,7 +231,7 @@ const ProductCard = () => {
                 </Row>
             </Container>
             <Container fluid>
-                <Row className='Product-dropdown-row'>
+                <Row className="Product-dropdown-row">
                     <Container>
                         <Row>
                             <Col xs={6}>
@@ -292,14 +239,14 @@ const ProductCard = () => {
                                     <h6 style={{ fontWeight: "bold" }}>Choose Category</h6>
                                 </div>
                             </Col>
-                            <Col xs={6} className='link'>
+                            <Col xs={6} className="link">
                                 <Container fluid className="p-0">
                                     <div>
                                         <div style={{ marginTop: "6px", marginRight: "4px" }}>
-                                            <button onClick={CategoryHandlePrev} style={{ background: "white", width: "25px", height: "25px", lineHeight: "25px", fontSize: "12px", color: "#ccc", border: "1px solid #ccc", borderRadius: "4px" }}><i className="slick-nav fa fa-angle-left" /></button>
+                                            <button onClick={() => handlePrev(categoryCurrentSlide, setCategoryCurrentSlide, categoryTotalSlides)} style={buttonStyle}><i className="slick-nav fa fa-angle-left" /></button>
                                         </div>
                                         <div style={{ marginTop: "-25px", marginLeft: "60px" }}>
-                                            <button onClick={CategoryHandleNext} style={{ background: "white", width: "25px", height: "25px", lineHeight: "25px", fontSize: "12px", color: "#ccc", border: "1px solid #ccc", borderRadius: "4px" }}><i className="slick-nav fa fa-angle-right" /></button>
+                                            <button onClick={() => handleNext(categoryCurrentSlide, setCategoryCurrentSlide, categoryTotalSlides)} style={buttonStyle}><i className="slick-nav fa fa-angle-right" /></button>
                                         </div>
                                     </div>
                                 </Container>
@@ -308,21 +255,86 @@ const ProductCard = () => {
                         <hr style={{ margin: "0 18%", backgroundColor: "yellow", height: "2px", border: "none" }} />
                     </Container>
                 </Row>
-                <Row>
+                <Row style={{ backgroundColor: "white", paddingBottom: "25px" }}>
                     <Container>
                         <div style={{ marginLeft: "17%", marginRight: "12%" }}>
                             <Carousel activeIndex={categoryCurrentSlide} onSelect={handleSelectCategory} controls={false} indicators={false}>
                                 {Array.from({ length: categoryTotalSlides }).map((_, slideIndex) => (
                                     <Carousel.Item key={slideIndex}>
                                         <Row className="d-flex flex-nowrap">
-                                            {Category.slice(slideIndex * categoryItemsPerSlide, (slideIndex + 1) * categoryItemsPerSlide).map((product, index) => (
+                                            {Category.slice(slideIndex * 6, (slideIndex + 1) * 6).map((category, index) => (
                                                 <Col key={index} xs={12} sm={6} md={4} lg={2}>
                                                     <div className="category-card">
-                                                        <img src={product.image} alt={product.title} className="product-image" />
+                                                        <img src={category.image} alt={category.title} className="product-image" />
                                                         <div className="category-info">
+                                                            <span>{category.title}</span>
+                                                        </div>
+                                                    </div>
+                                                </Col>
+                                            ))}
+                                        </Row>
+                                    </Carousel.Item>
+                                ))}
+                            </Carousel>
+                        </div>
+                    </Container>
+                </Row>
+                <Row className="justify-content-center" style={{ backgroundColor: "rgba(0, 0, 0, 0.3)", backdropFilter: "blur(4px)", paddingBottom: "165px" }}>
+                    <Col xs={12} sm={8} md={8} lg={6}>
+                        <Container style={{ marginTop: "100px" }}>
+                            <div style={{ textAlign: "center", color: "white" }}>
+                                <h5>Work Like a Professional, With Best in its Class</h5>
+                            </div>
+                        </Container>
+                    </Col>
+                </Row>
+            </Container>
+            <Container fluid>
+                <Row className="Product-dropdown-row">
+                    <Container>
+                        <Row>
+                            <Col xs={6}>
+                                <div style={{ marginTop: "30px", marginRight: "80px" }}>
+                                    <h6 style={{ fontWeight: "bold" }}>On Sale Product</h6>
+                                </div>
+                            </Col>
+                            <Col xs={6} className="link">
+                                <Container fluid className="p-0">
+                                    <div>
+                                        <div style={{ marginTop: "25px", marginRight: "4px" }}>
+                                            <button onClick={() => handlePrev(saleProduct, setSaleProduct, techTotalSlides)} style={buttonStyle}><i className="slick-nav fa fa-angle-left" /></button>
+                                        </div>
+                                        <div style={{ marginTop: "-25px", marginLeft: "60px" }}>
+                                            <button onClick={() => handleNext(saleProduct, setSaleProduct, techTotalSlides)} style={buttonStyle}><i className="slick-nav fa fa-angle-right" /></button>
+                                        </div>
+                                    </div>
+                                </Container>
+                            </Col>
+                        </Row>
+                        <hr style={{ margin: "0 18%", backgroundColor: "yellow", height: "2px", border: "none" }} />
+                    </Container>
+                </Row>
+                <Row style={{ backgroundColor: "white" }}>
+                    <Container>
+                        <div style={{ marginLeft: "17%", marginRight: "12%" }}>
+                            <Carousel activeIndex={saleProduct} onSelect={handleSelectSaleProduct} controls={false} indicators={false}>
+                                {Array.from({ length: techTotalSlides }).map((_, slideIndex) => (
+                                    <Carousel.Item key={slideIndex}>
+                                        <Row>
+                                            {products.slice(slideIndex * 8, (slideIndex + 1) * 8).map((product, index) => (
+                                                <Col key={index} xs={12} sm={6} md={4} lg={3}>
+                                                    <div className="product-card">
+                                                        <img src={product.image} alt={product.title} className="product-image" />
+                                                        <div className="product-info">
                                                             <span>{product.title}</span>
-                                                            span
-
+                                                            <div className="product-pricing">
+                                                                {product.originalPrice > 0 && <span className="original-price">£{product.originalPrice}</span>}
+                                                                <span className="discounted-price">£{product.discountedPrice}</span>
+                                                            </div>
+                                                            {product.discount && <div className="discount">-{product.discount}</div>}
+                                                            <div className="rating">
+                                                                {'★'.repeat(product.rating)}{'☆'.repeat(5 - product.rating)}
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </Col>
@@ -337,6 +349,17 @@ const ProductCard = () => {
             </Container>
         </>
     );
+};
+
+const buttonStyle = {
+    background: "white",
+    width: "25px",
+    height: "25px",
+    lineHeight: "25px",
+    fontSize: "12px",
+    color: "#ccc",
+    border: "1px solid #ccc",
+    borderRadius: "4px"
 };
 
 export default ProductCard;

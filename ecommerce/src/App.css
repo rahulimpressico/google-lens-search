@@ -36,3 +36,13 @@
     transform: rotate(360deg);
   }
 }
+
+
+
+section {
+  background-image: url(https://150698241.v2.pressablecdn.com/big-store-electro/wp-content/uploads/sites/164/2021/07/bg-1.jpeg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+}
