@@ -1,6 +1,6 @@
 import React from 'react';
-import NavBar from '../Navbar/Navbar';
 import ProductCard from '../components/ProductCard';
+import { NavBar } from '../Navbar/Navbar';
 
 
 const products = [
