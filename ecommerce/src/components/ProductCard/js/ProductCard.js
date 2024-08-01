@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Navbar, Nav, Container, Row, Col, Carousel, Button } from 'react-bootstrap';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import '../components/ProductCard.css';
+import '../css/ProductCard.css';
 import { useNavigate } from 'react-router-dom';
-// import { top_rated_product } from '../api';
+import { getProductsByCategory } from '../../../api';
 
 
 const products = [
@@ -236,9 +236,9 @@ const ProductCard = () => {
 
 
     const handleProductClick = (id) => {
-        navigate(`/product/${id}`);
+        const selectedProduct = topRatedProducts.find(product => product.id === id);
+        navigate(`/product/${id}`, { state: { product: selectedProduct, topRatedProducts } });
     };
-
 
 
     const handleCategory = (categoryTitle) => {
@@ -246,34 +246,24 @@ const ProductCard = () => {
 
     }
 
-    // useEffect(() => {
-    //     const fetchTopRatedProducts = async () => {
-    //         try {
-    //             const response = await top_rated_product();
-    //             if (response.data && Array.isArray(response.data.top_rated_products)) {
-    //                 const transformedProducts = response.data.top_rated_products.map(product => ({
-    //                     id: product.id, // Add id for unique key prop
-    //                     image: product.image_url,
-    //                     title: product.name,
-    //                     originalPrice: product.actual_price,
-    //                     discountedPrice: product.discount_price,
-    //                     rating: 4,
-    //                     discount: (product.actual_price - product.discount_price).toFixed(2),
-    //                 }));
-    //                 setTopRatedProducts(transformedProducts);
-    //             } else {
-    //                 console.error('Unexpected response format:', response.data);
-    //             }
-    //         } catch (error) {
-    //             console.error('Error fetching top-rated products:', error);
-    //         }
-    //     };
+    useEffect(() => {
+        const fetchTopRatedProducts = async () => {
+            try {
+                const response = await getProductsByCategory('products_50_off');
+                if (response.data && Array.isArray(response.data.products_50_off)) {
+                   
+                    setTopRatedProducts(response.data.products_50_off);
+                } else {
+                    console.error('Unexpected response format:', response.data);
+                }
+            } catch (error) {
+                console.error('Error fetching top-rated products:', error);
+            }
+        };
 
-    //     fetchTopRatedProducts();
-    // }, []);
+        fetchTopRatedProducts();
+    }, []);
 
-
-    // console.log("product:", topRatedProducts)
 
 
 
@@ -447,19 +437,19 @@ const ProductCard = () => {
                                 {Array.from({ length: techTotalSlides }).map((_, slideIndex) => (
                                     <Carousel.Item key={slideIndex}>
                                         <Row>
-                                            {products.slice(slideIndex * 8, (slideIndex + 1) * 8).map((product, index) => (
+                                            {topRatedProducts.slice(slideIndex * 8, (slideIndex + 1) * 8).map((product, index) => (
                                                 <Col key={index} xs={12} sm={6} md={4} lg={3} onClick={() => handleProductClick(product.id)}>
                                                     <div className="product-card">
-                                                        <img src={product.image} alt={product.title} className="product-image" />
+                                                        <img src={product.image} alt={product.name} className="product-image" />
                                                         <div className="product-info">
-                                                            <span>{product.title}</span>
+                                                            <span>{product.name}</span>
                                                             <div className="product-pricing">
-                                                                {product.originalPrice > 0 && <span className="original-price">£{product.originalPrice}</span>}
-                                                                <span className="discounted-price">£{product.discountedPrice}</span>
+                                                                {product.originalPrice > 0 && <span className="original-price">£{product.actual_price}</span>}
+                                                                <span className="discounted-price">£{product.discount_price}</span>
                                                             </div>
                                                             {product.discount && <div className="discount">-£{product.discount}</div>}
                                                             <div className="rating">
-                                                                {'★'.repeat(product.rating)}{'☆'.repeat(5 - product.rating)}
+                                                                {'★'.repeat(product.ratings)}{'☆'.repeat(5 - product.ratings)}
                                                             </div>
                                                         </div>
                                                     </div>

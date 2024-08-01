@@ -1,101 +1,59 @@
-import React from 'react';
-import ProductCard from '../components/ProductCard';
+import React, { useRef, useState } from 'react';
+import ProductCard from '../components/ProductCard/js/ProductCard';
 import { NavBar } from '../Navbar/Navbar';
+import { Frontpage } from "../components/FrontPage/js/front-page";
+import { SearchResults } from '../components/SearchResult/js/SearchResult';
+import { searchProductByText } from '../api'; // Adjust the path as needed
 
 
-const products = [
-    {
-        image: 'link_to_image_1',
-        title: 'Aliquam erat volutpat',
-        originalPrice: 1000,
-        discountedPrice: 999,
-        rating: 3,
-        discount: '999.00'
-    },
-    {
-        image: 'link_to_image_2',
-        title: 'Suspendisse gravida lacus varius',
-        originalPrice: 1000,
-        discountedPrice: 999,
-        rating: 4,
-        discount: '999.00'
-    },
-    {
-        image: 'link_to_image_3',
-        title: 'Suspendisse vehicula at dui',
-        originalPrice: 56,
-        discountedPrice: 56,
-        rating: 5
-    },
-    {
-        image: 'link_to_image_4',
-        title: 'Fusce nec diam et dolor',
-        originalPrice: 45,
-        discountedPrice: 40,
-        rating: 0,
-        discount: '5.00'
-    },
-    {
-        image: 'link_to_image_5',
-        title: 'Donec ullamcorper turpis',
-        originalPrice: 45,
-        discountedPrice: 42,
-        rating: 0,
-        discount: '3.00'
-    },
-    {
-        image: 'link_to_image_6',
-        title: 'Aenean non pellentesque mauris',
-        originalPrice: 1000,
-        discountedPrice: 999,
-        rating: 0,
-        discount: '1000.00'
-    },
-    {
-        image: 'link_to_image_7',
-        title: 'Pellentesque dignissim sapien...',
-        originalPrice: 0,
-        discountedPrice: 78,
-        rating: 0
-    },
-    {
-        image: 'link_to_image_8',
-        title: 'Curabitur ultricies ante ultricies...',
-        originalPrice: 0,
-        discountedPrice: 45,
-        rating: 0,
-        discount: '10.00'
-    },
-    {
-        image: 'link_to_image_9',
-        title: 'Morbi varius ligula eget ante',
-        originalPrice: 55,
-        discountedPrice: 45,
-        rating: 0,
-        discount: '10.00'
-    },
-    {
-        image: 'link_to_image_10',
-        title: 'Mauris elit magna, aliquet',
-        originalPrice: 0,
-        discountedPrice: 50,
-        rating: 0
-    }
-];
+
 
 
 
 export const Home = () => {
+    const [results, setResults] = useState([]);
+    const [searchText, setSearchText] = useState('');
+    const debounceTimeout = useRef(null);
+
+    const handleSearchChange = (text) => {
+        setSearchText(text);
+
+        if (debounceTimeout.current) {
+            clearTimeout(debounceTimeout.current);
+        }
+
+        debounceTimeout.current = setTimeout(async () => {
+            if (text.length > 2) {
+                try {
+                    const response = await searchProductByText(text);
+                    setResults(response.results); // Assuming response.data contains the results
+                } catch (error) {
+                    console.error('Error during search:', error);
+                    setResults([]);
+                }
+            } else {
+                setResults([]);
+            }
+        }, 200);
+    };
+
     return (
         <>
-            <NavBar />
-            <div className="home">
-                <div className="products-grid">
-
-                    <ProductCard />
+            <NavBar onSearchResults={handleSearchChange} />
+            {results.length > 0 ? (
+                <div className="search-results-container">
+                    <SearchResults results={results} />
                 </div>
-            </div>
+            ) : (
+                <>
+                    <Frontpage />
+                    <div className="home">
+                        <div className="products-grid">
+                            <ProductCard />
+                        </div>
+                    </div>
+                </>
+            )}
         </>
-    )
-
-}
+    );
+};

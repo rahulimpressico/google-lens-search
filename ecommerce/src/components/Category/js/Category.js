@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { NavBar } from '../Navbar/Navbar';
+import { NavBar } from '../../../Navbar/Navbar';
 import { Button, Col, Container, Pagination, Row } from 'react-bootstrap';
-import '../components/Category.css';
+import '../css/Category.css';
 
 
 
@@ -196,7 +196,6 @@ export const Category = () => {
                                             {item.originalPrice > 0 && <span className="original-price">£{item.originalPrice}</span>}
                                             <span className="discounted-price">£{item.discountedPrice}</span>
                                         </div>
-                                        <div className="discount">--£{item.discount}</div>
                                         <div className="rating">
                                             {'★'.repeat(item.rating)}{'☆'.repeat(5 - item.rating)}
                                         </div>

@@ -14,11 +14,31 @@ export const axiosPrivate = axios.create(baseConfig);
 export const axiosUnhandled = axios.create(baseConfig);
 
 
-export const top_rated_product = async () => {
+export const getProductsByCategory = async (category) => {
     const res = await axiosPublic({
-        url: `/thumbnails?category=top_rated_products`,
+        url: `/featured_categories?category=${category}`,
         method: 'GET',
     });
 
     return res;
+};
+
+
+
+export const searchProductByText = async (query, smartsearchx = 'off', locationQuery = 'delhi') => {
+    try {
+        const res = await axiosPublic({
+            url: `/search/`,
+            method: 'GET',
+            params: {
+                q: query,
+                smartsearchx: smartsearchx,
+                location_query: locationQuery,
+            },
+        });
+        return res.data;
+    } catch (error) {
+        console.error('Error searching product by text:', error);
+        throw error;
+    }
 };

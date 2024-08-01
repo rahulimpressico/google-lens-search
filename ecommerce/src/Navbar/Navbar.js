@@ -3,12 +3,15 @@ import './NavBar.css';
 import { Navbar, Nav, Container, Row, Col, Form, InputGroup, Button } from 'react-bootstrap';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useNavigate } from 'react-router-dom';
+import { searchProductByText } from '../api';
 
 
-export const NavBar = () => {
+export const NavBar = ({ onSearchResults }) => {
+    const navigate = useNavigate()
     const [activeLink, setActiveLink] = useState("#home");
-    const fileInputRef = useRef(null);
     const [smartSearch, setSmartSearch] = useState(false);
+    const [searchText, setSearchText] = useState('');
+    const latestSearch = useRef('');
 
     const handleSmartSearchToggle = () => {
         setSmartSearch(!smartSearch);
@@ -23,7 +26,6 @@ export const NavBar = () => {
         const file = event.target.files[0];
         if (file) {
             console.log('Selected file:', file);
-            // Handle file upload logic here
         }
     };
 
@@ -34,10 +36,17 @@ export const NavBar = () => {
         textDecoration: 'none'
     });
 
-    const navigate = useNavigate()
     const goToHome = () => {
         navigate('/')
     }
+    const handleSearchChange = (e) => {
+        const newSearchText = e.target.value;
+        setSearchText(newSearchText);
+        onSearchResults(newSearchText); // Pass the latest input value
+    };
+
+
+
 
     return (
         <Container fluid>
@@ -54,7 +63,7 @@ export const NavBar = () => {
                 </Col>
             </Row>
             <Row className='logo-title'>
-                <Col xs={12} md={3} className='logo text-md-left'>
+                <Col xs={12} md={3} className='logo align-items-center'>
                     <img
                         src='https://www.impressico.com/wp-content/uploads/2020/09/impressico-logo.png'
                         alt='impressico logo'
@@ -62,12 +71,14 @@ export const NavBar = () => {
 
                     />
                 </Col>
-                <Col xs={12} md={4} className='search-bar'>
+                <Col xs={12} md={6} className='search-bar'>
                     <div className="input-icon-wrapper">
                         <Form.Control
                             type="text"
                             placeholder="Search"
                             className="search-input"
+                            value={searchText}
+                            onChange={handleSearchChange}
                         />
                         {smartSearch && (
                             <label htmlFor="file-upload" className="file-upload-label">
@@ -114,94 +125,76 @@ export const NavBar = () => {
                         </Col>
                     </Row>
                 </Col>
-            </Row>
-            <Row className='dropdown-row'>
+            </Row><Row className='dropdown-row'>
                 <Container fluid>
-                    <Row className="py-2">
-                        {/* Category Dropdown Section */}
-                        <Col xs={12} md={6} className='category-container'>
-                            <div className='d-flex align-items-center'>
-                                <div className='category me-2'>
-                                    <span><i className="fas fa-bars" /></span>
-                                </div>
-                                <div className='horizontal-dropdown'>
-                                    <NavDropdown title="Category" id="basic-nav-dropdown">
-                                        <NavDropdown.Item href="#action/3.1">Accessories</NavDropdown.Item>
-                                        <NavDropdown.Item href="#action/3.2">Cameras</NavDropdown.Item>
-                                        <NavDropdown.Item href="#action/3.3">Audio</NavDropdown.Item>
-                                        <NavDropdown.Item href="#action/3.4">Headphones</NavDropdown.Item>
-                                        <NavDropdown.Item href="#action/3.4">Smartphone</NavDropdown.Item>
-                                        <NavDropdown.Divider />
-                                        <NavDropdown.Item href="#action/3.4">Speaker</NavDropdown.Item>
-
-
-                                    </NavDropdown>
-                                </div>
-                            </div>
-                        </Col>
-
-                        {/* Links Section */}
-                        <Col xs={12} md={6} className='link'>
-                            <Container fluid className="p-0">
-                                <Navbar expand="lg" className="p-0">
-                                    <Nav className="me-auto d-flex flex-wrap justify-content-center justify-content-md-end">
-                                        <Nav.Link
-                                            href="#home"
-                                            onClick={() => handleNavClick("#home")}
-                                            style={linkStyle("#home")}
-                                        >
-                                            Home
-                                        </Nav.Link>
-                                        <Nav.Link
-                                            href="#blog"
-                                            onClick={() => handleNavClick("#blog")}
-                                            style={linkStyle("#blog")}
-                                        >
-                                            Blog
-                                        </Nav.Link>
-                                        <Nav.Link
-                                            href="#shop"
-                                            onClick={() => handleNavClick("#shop")}
-                                            style={linkStyle("#shop")}
-                                        >
-                                            Shop
-                                        </Nav.Link>
-                                        <Nav.Link
-                                            href="#accessories"
-                                            onClick={() => handleNavClick("#accessories")}
-                                            style={linkStyle("#accessories")}
-                                        >
-                                            Accessories
-                                        </Nav.Link>
-                                        <Nav.Link
-                                            href="#watches"
-                                            onClick={() => handleNavClick("#watches")}
-                                            style={linkStyle("#watches")}
-                                        >
-                                            Watches
-                                        </Nav.Link>
-                                        <Nav.Link
-                                            href="#contact"
-                                            onClick={() => handleNavClick("#contact")}
-                                            style={linkStyle("#contact")}
-                                        >
-                                            Contact Us
-                                        </Nav.Link>
-                                        <Nav.Link
-                                            href="#upgrade"
-                                            onClick={() => handleNavClick("#upgrade")}
-                                            style={linkStyle("#upgrade")}
-                                        >
-                                            Upgrade To Pro
-                                        </Nav.Link>
-                                    </Nav>
-                                </Navbar>
-                            </Container>
+                    <Row className="py-2 align-items-center">
+                        <Col xs={12}>
+                            <Navbar expand="lg" className="p-0">
+                                <Container >
+                                    <Navbar.Brand href="#home" className="me-auto" style={{ color: "white", fontWeight: "bold", fontStyle: "italic" }}>Impressico</Navbar.Brand>
+                                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                                    <Navbar.Collapse id="basic-navbar-nav">
+                                        <Nav className="ms-auto d-flex flex-wrap justify-content-end">
+                                            <Nav.Link
+                                                href="#home"
+                                                onClick={() => handleNavClick("#home")}
+                                                style={linkStyle("#home")}
+                                            >
+                                                Home
+                                            </Nav.Link>
+                                            <Nav.Link
+                                                href="#blog"
+                                                onClick={() => handleNavClick("#blog")}
+                                                style={linkStyle("#blog")}
+                                            >
+                                                Blog
+                                            </Nav.Link>
+                                            <Nav.Link
+                                                href="#shop"
+                                                onClick={() => handleNavClick("#shop")}
+                                                style={linkStyle("#shop")}
+                                            >
+                                                Shop
+                                            </Nav.Link>
+                                            <Nav.Link
+                                                href="#accessories"
+                                                onClick={() => handleNavClick("#accessories")}
+                                                style={linkStyle("#accessories")}
+                                            >
+                                                Accessories
+                                            </Nav.Link>
+                                            <Nav.Link
+                                                href="#watches"
+                                                onClick={() => handleNavClick("#watches")}
+                                                style={linkStyle("#watches")}
+                                            >
+                                                Watches
+                                            </Nav.Link>
+                                            <Nav.Link
+                                                href="#contact"
+                                                onClick={() => handleNavClick("#contact")}
+                                                style={linkStyle("#contact")}
+                                            >
+                                                Contact Us
+                                            </Nav.Link>
+                                            <Nav.Link
+                                                href="#upgrade"
+                                                onClick={() => handleNavClick("#upgrade")}
+                                                style={linkStyle("#upgrade")}
+                                            >
+                                                Upgrade To Pro
+                                            </Nav.Link>
+                                        </Nav>
+                                    </Navbar.Collapse>
+                                </Container>
+                            </Navbar>
                         </Col>
                     </Row>
                 </Container>
             </Row>
+
         </Container>
+
     );
 };
 

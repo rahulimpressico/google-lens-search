@@ -1,9 +1,10 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { NavBar } from '../Navbar/Navbar';
+import { NavBar } from '../../../Navbar/Navbar';
 import { Button, Col, Container, Row } from 'react-bootstrap';
-import '../components/ProductDetails.css';
+import '../css/ProductDetails.css';
 
+import { useLocation } from 'react-router-dom';
 
 
 const products = [
@@ -170,12 +171,16 @@ const products = [
 ];
 
 export const ProductDetails = () => {
-    const { id } = useParams(); // Get the product ID from the URL
-    const product = products.find(product => product.id === parseInt(id)); // Find the product by ID
+    const location = useLocation();
+    const { product, validResults } = location.state || {};
 
     if (!product) {
         return <div>Product not found</div>;
     }
+    // const { id } = useParams(); // Get the product ID from the URL
+    // const product = products.find(product => product.id === parseInt(id)); // Find the product by ID
+
+
 
     return (
         <>
@@ -185,21 +190,33 @@ export const ProductDetails = () => {
                     <Row>
                         <Col xs={12} md={6} className="mb-3">
                             <div className="product-image text-center">
-                                <img src={product.image} alt={product.title} />
+                                <img src={product.image} alt={product.name} />
                             </div>
                         </Col>
                         <Col xs={12} md={6}>
                             <div className="product-info">
-                                <h4>{product.title}</h4>
+                                <h4>{product.name.toUpperCase()}</h4>
                                 <hr />
                                 <div className="price">
-                                    <span className="original-price">£{product.originalPrice}</span>
-                                    <span className="discounted-price">£{product.discountedPrice}</span>
+                                    <span className="original-price">£{product.actual_price}</span>
+                                    <span className="discounted-price">£{product.discount_price}</span>
+                                </div>
+                                <div className="rating">
+                                    {'★'.repeat(product.ratings)}{'☆'.repeat(5 - product.ratings)}
                                 </div>
                                 <div className="description">
                                     <p style={{ fontWeight: "300" }}>{product.description}</p>
                                 </div>
-                                <Button variant="warning" className="add-to-cart-btn">View On Amazon</Button>
+
+
+                                <div>
+                                    <Button variant="warning" className="add-to-cart-btn">
+                                        <a href={product.link} target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>
+                                            View On Amazon
+                                        </a>
+                                    </Button>
+                                </div>
+
                             </div>
                         </Col>
                     </Row>

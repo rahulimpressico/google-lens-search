@@ -16,7 +16,7 @@
 .price {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     
 }
 
@@ -54,4 +54,16 @@
 .add-to-cart-btn:hover {
     background-color: gray; 
     color: white;
+}
+
+
+.rating {
+    margin-top: 10px;
+    color: #ff0 !important;
+  }
+  
+
+.description{
+    font-size: 1.5em;
+
 }
