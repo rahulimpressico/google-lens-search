@@ -182,7 +182,6 @@ export const Category = () => {
 
     return (
         <>
-            <NavBar />
             <div className="category-details">
                 <Container>
                     <Row>

@@ -4,6 +4,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import '../css/ProductCard.css';
 import { useNavigate } from 'react-router-dom';
 import { getProductsByCategory } from '../../../api';
+import { BiCamera } from 'react-icons/bi';
 
 
 const products = [
@@ -159,11 +160,6 @@ const products = [
 
 const Category = [
     {
-        image: 'https://150698241.v2.pressablecdn.com/big-store-electro/wp-content/uploads/sites/164/2021/01/categ-a.png',
-        title: 'Accessories',
-
-    },
-    {
         image: 'https://150698241.v2.pressablecdn.com/big-store-electro/wp-content/uploads/sites/164/2020/07/category-img-1-woo-slider.png',
         title: 'Cameras',
 
@@ -245,6 +241,8 @@ const ProductCard = () => {
         navigate(`/category/${categoryTitle.toLowerCase()}`);
 
     }
+
+
 
     useEffect(() => {
         const fetchTopRatedProducts = async () => {

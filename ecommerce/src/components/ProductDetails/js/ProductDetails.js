@@ -184,7 +184,6 @@ export const ProductDetails = () => {
 
     return (
         <>
-            <NavBar />
             <div className="product-details">
                 <Container>
                     <Row>
