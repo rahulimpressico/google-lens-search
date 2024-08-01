@@ -1,7 +1,8 @@
-import React from "react";
-import NavBar from "../Navbar/Navbar";
-import ProductCard from "../components/ProductCard";
+import React from 'react';
+import ProductCard from '../components/ProductCard';
+import { NavBar } from '../Navbar/Navbar';
 import Frontpage from "../components/front-page";
+import Footer from "../components/footer";
 
 const products = [
   {
@@ -87,12 +88,13 @@ export const Home = () => {
   return (
     <>
       <NavBar />
-        <Frontpage />
+      <Frontpage />
       <div className="home">
         <div className="products-grid">
           <ProductCard />
         </div>
       </div>
+      <Footer />
     </>
   );
 };

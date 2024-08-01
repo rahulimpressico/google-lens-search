@@ -135,3 +135,29 @@
     white-space: nowrap;
 }
 
+
+
+
+
+.input-icon-wrapper {
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
+  padding-right: 2.5rem; /* Space for the icon */
+}
+
+.file-upload-label {
+  position: absolute;
+  right: 0.5rem; /* Space from the right edge of the input */
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.file-upload-label svg {
+  width: 16px; /* Adjust size as needed */
+  height: 16px; /* Adjust size as needed */
+  color: #007bff; /* Adjust color as needed */
+}

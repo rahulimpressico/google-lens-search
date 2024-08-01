@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navbar, Nav, Container, Row, Col, Carousel, Button } from 'react-bootstrap';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import '../components/ProductCard.css';
+import { useNavigate } from 'react-router-dom';
+// import { top_rated_product } from '../api';
 
 
 const products = [
     {
+        id: 1,
         image: 'https://wpthemes.themehunk.com/big-store-electro/wp-content/uploads/sites/164/2020/07/product26-320x320.png',
         title: 'Aliquam erat volutpat',
         originalPrice: 1000,
@@ -14,6 +17,7 @@ const products = [
         discount: '1.00',
     },
     {
+        id: 2,
         image: 'https://wpthemes.themehunk.com/big-store-electro/wp-content/uploads/sites/164/2020/07/product27-320x320.png',
         title: 'Suspendisse gravida lacus varius',
         originalPrice: 1000,
@@ -22,6 +26,7 @@ const products = [
         discount: '1.00',
     },
     {
+        id: 3,
         image: 'https://150698241.v2.pressablecdn.com/big-store-electro/wp-content/uploads/sites/164/2020/07/products11-320x320.png',
         title: 'Suspendisse vehicula at dui',
         originalPrice: 156,
@@ -30,6 +35,7 @@ const products = [
         discount: '100.00',
     },
     {
+        id: 4,
         image: 'https://150698241.v2.pressablecdn.com/big-store-electro/wp-content/uploads/sites/164/2020/07/product15-320x320.png',
         title: 'Fusce nec diam et dolor',
         originalPrice: 45,
@@ -38,6 +44,7 @@ const products = [
         discount: '5.00',
     },
     {
+        id: 5,
         image: 'https://150698241.v2.pressablecdn.com/big-store-electro/wp-content/uploads/sites/164/2020/07/product16-320x320.png',
         title: 'Donec ullamcorper turpis',
         originalPrice: 45,
@@ -46,6 +53,7 @@ const products = [
         discount: '3.00',
     },
     {
+        id: 6,
         image: 'https://150698241.v2.pressablecdn.com/big-store-electro/wp-content/uploads/sites/164/2020/07/product19-320x320.png',
         title: 'Aenean non pellentesque mauris',
         originalPrice: 1000,
@@ -54,6 +62,7 @@ const products = [
         discount: '1.00',
     },
     {
+        id: 7,
         image: 'https://150698241.v2.pressablecdn.com/big-store-electro/wp-content/uploads/sites/164/2020/07/product1-320x320.png',
         title: 'Pellentesque dignissim sapien...',
         originalPrice: 530,
@@ -62,6 +71,7 @@ const products = [
         discount: '452.00',
     },
     {
+        id: 8,
         image: 'https://150698241.v2.pressablecdn.com/big-store-electro/wp-content/uploads/sites/164/2020/07/product10-320x320.png',
         title: 'Curabitur ultricies ante ultricies...',
         originalPrice: 1110,
@@ -70,6 +80,7 @@ const products = [
         discount: '1065.00',
     },
     {
+        id: 9,
         image: 'https://150698241.v2.pressablecdn.com/big-store-electro/wp-content/uploads/sites/164/2020/07/product6-320x320.png',
         title: 'Morbi varius ligula eget ante',
         originalPrice: 55,
@@ -78,6 +89,7 @@ const products = [
         discount: '10.00',
     },
     {
+        id: 10,
         image: 'https://150698241.v2.pressablecdn.com/big-store-electro/wp-content/uploads/sites/164/2020/07/product7-320x320.png',
         title: 'Mauris elit magna, aliquet',
         originalPrice: 210,
@@ -86,6 +98,7 @@ const products = [
         discount: '160.00',
     },
     {
+        id: 11,
         image: 'https://150698241.v2.pressablecdn.com/big-store-electro/wp-content/uploads/sites/164/2020/07/product8-320x320.png',
         title: 'Vivamus luctus urna sed urna',
         originalPrice: 150,
@@ -94,6 +107,7 @@ const products = [
         discount: '30.00',
     },
     {
+        id: 12,
         image: 'https://150698241.v2.pressablecdn.com/big-store-electro/wp-content/uploads/sites/164/2020/07/product9-320x320.png',
         title: 'Nunc feugiat mi a tellus',
         originalPrice: 90,
@@ -102,6 +116,7 @@ const products = [
         discount: '20.00',
     },
     {
+        id: 13,
         image: 'https://150698241.v2.pressablecdn.com/big-store-electro/wp-content/uploads/sites/164/2020/07/product12-320x320.png',
         title: 'Vestibulum ante ipsum primis',
         originalPrice: 120,
@@ -110,6 +125,7 @@ const products = [
         discount: '25.00',
     },
     {
+        id: 14,
         image: 'https://150698241.v2.pressablecdn.com/big-store-electro/wp-content/uploads/sites/164/2020/07/product13-320x320.png',
         title: 'In faucibus orci luctus et',
         originalPrice: 80,
@@ -118,6 +134,7 @@ const products = [
         discount: '20.00',
     },
     {
+        id: 15,
         image: 'https://150698241.v2.pressablecdn.com/big-store-electro/wp-content/uploads/sites/164/2020/07/product14-320x320.png',
         title: 'Etiam feugiat lorem non metus',
         originalPrice: 200,
@@ -126,6 +143,7 @@ const products = [
         discount: '20.00',
     },
     {
+        id: 16,
         image: 'https://150698241.v2.pressablecdn.com/big-store-electro/wp-content/uploads/sites/164/2020/07/product20-320x320.png',
         title: 'Phasellus viverra nulla ut',
         originalPrice: 220,
@@ -134,6 +152,7 @@ const products = [
         discount: '20.00',
     }
 ];
+
 
 
 
@@ -181,7 +200,13 @@ const Category = [
     },
 ];
 
+
+
+
+
 const ProductCard = () => {
+    const [topRatedProducts, setTopRatedProducts] = useState([]);
+    const navigate = useNavigate()
     const [activeLink, setActiveLink] = useState("#home");
     const [techCurrentSlide, setTechCurrentSlide] = useState(0);
     const [categoryCurrentSlide, setCategoryCurrentSlide] = useState(0);
@@ -195,6 +220,7 @@ const ProductCard = () => {
     const handleSelectCategory = (selectedIndex) => setCategoryCurrentSlide(selectedIndex);
     const handleSelectSaleProduct = (selectedIndex) => setSaleProduct(selectedIndex);
 
+
     const handlePrev = (currentSlide, setSlide, totalSlides) => {
         setSlide(currentSlide === 0 ? totalSlides - 1 : currentSlide - 1);
     };
@@ -207,6 +233,49 @@ const ProductCard = () => {
         textDecoration: 'none',
         fontWeight: 'bold',
     });
+
+
+    const handleProductClick = (id) => {
+        navigate(`/product/${id}`);
+    };
+
+
+
+    const handleCategory = (categoryTitle) => {
+        navigate(`/category/${categoryTitle.toLowerCase()}`);
+
+    }
+
+    // useEffect(() => {
+    //     const fetchTopRatedProducts = async () => {
+    //         try {
+    //             const response = await top_rated_product();
+    //             if (response.data && Array.isArray(response.data.top_rated_products)) {
+    //                 const transformedProducts = response.data.top_rated_products.map(product => ({
+    //                     id: product.id, // Add id for unique key prop
+    //                     image: product.image_url,
+    //                     title: product.name,
+    //                     originalPrice: product.actual_price,
+    //                     discountedPrice: product.discount_price,
+    //                     rating: 4,
+    //                     discount: (product.actual_price - product.discount_price).toFixed(2),
+    //                 }));
+    //                 setTopRatedProducts(transformedProducts);
+    //             } else {
+    //                 console.error('Unexpected response format:', response.data);
+    //             }
+    //         } catch (error) {
+    //             console.error('Error fetching top-rated products:', error);
+    //         }
+    //     };
+
+    //     fetchTopRatedProducts();
+    // }, []);
+
+
+    // console.log("product:", topRatedProducts)
+
+
 
     return (
         <>
@@ -256,9 +325,8 @@ const ProductCard = () => {
                                         <Row>
                                             {products.slice(slideIndex * 8, (slideIndex + 1) * 8).map((product, index) => {
                                                 const discount = product.discount || '0.00'; // Set default value if discount is undefined
-                                                console.log(product);
                                                 return (
-                                                    <Col key={index} xs={12} sm={6} md={4} lg={3}>
+                                                    <Col key={index} xs={12} sm={6} md={4} lg={3} onClick={() => handleProductClick(product.id)}>
                                                         <div className="product-card">
                                                             <img src={product.image} alt={product.title} className="product-image" />
                                                             <div className="product-info">
@@ -318,7 +386,7 @@ const ProductCard = () => {
                                     <Carousel.Item key={slideIndex}>
                                         <Row className="d-flex flex-nowrap">
                                             {Category.slice(slideIndex * 6, (slideIndex + 1) * 6).map((category, index) => (
-                                                <Col key={index} xs={12} sm={6} md={4} lg={2}>
+                                                <Col key={index} xs={12} sm={6} md={4} lg={2} onClick={(e) => handleCategory(category.title)}>
                                                     <div className="category-card">
                                                         <img src={category.image} alt={category.title} className="product-image" />
                                                         <div className="category-info">
@@ -353,7 +421,7 @@ const ProductCard = () => {
                         <Row>
                             <Col xs={6}>
                                 <div style={{ marginTop: "30px", marginRight: "80px" }}>
-                                    <h6 style={{ fontWeight: "bold" }}>On Sale Product</h6>
+                                    <h6 style={{ fontWeight: "bold" }}>Top Rated Product</h6>
                                 </div>
                             </Col>
                             <Col xs={6} className="link">
@@ -380,7 +448,7 @@ const ProductCard = () => {
                                     <Carousel.Item key={slideIndex}>
                                         <Row>
                                             {products.slice(slideIndex * 8, (slideIndex + 1) * 8).map((product, index) => (
-                                                <Col key={index} xs={12} sm={6} md={4} lg={3}>
+                                                <Col key={index} xs={12} sm={6} md={4} lg={3} onClick={() => handleProductClick(product.id)}>
                                                     <div className="product-card">
                                                         <img src={product.image} alt={product.title} className="product-image" />
                                                         <div className="product-info">
@@ -389,7 +457,7 @@ const ProductCard = () => {
                                                                 {product.originalPrice > 0 && <span className="original-price">£{product.originalPrice}</span>}
                                                                 <span className="discounted-price">£{product.discountedPrice}</span>
                                                             </div>
-                                                            {product.discount && <div className="discount">-{product.discount}</div>}
+                                                            {product.discount && <div className="discount">-£{product.discount}</div>}
                                                             <div className="rating">
                                                                 {'★'.repeat(product.rating)}{'☆'.repeat(5 - product.rating)}
                                                             </div>
