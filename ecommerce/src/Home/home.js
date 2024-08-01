@@ -34,7 +34,7 @@ export const Home = () => {
             } else {
                 setResults([]);
             }
-        }, 200);
+        }, 10);
     };
 
     return (

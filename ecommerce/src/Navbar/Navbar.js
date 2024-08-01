@@ -3,7 +3,7 @@ import './NavBar.css';
 import { Navbar, Nav, Container, Row, Col, Form, InputGroup, Button } from 'react-bootstrap';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useNavigate } from 'react-router-dom';
-import { searchProductByText } from '../api';
+import { searchProductByText, SuggestionByText } from '../api';
 
 
 export const NavBar = ({ onSearchResults }) => {
@@ -11,7 +11,9 @@ export const NavBar = ({ onSearchResults }) => {
     const [activeLink, setActiveLink] = useState("#home");
     const [smartSearch, setSmartSearch] = useState(false);
     const [searchText, setSearchText] = useState('');
-    const latestSearch = useRef('');
+    const [suggestions, setSuggestions] = useState([]);
+    const [isSuggestionsVisible, setIsSuggestionsVisible] = useState(false);
+
 
     const handleSmartSearchToggle = () => {
         setSmartSearch(!smartSearch);
@@ -39,10 +41,34 @@ export const NavBar = ({ onSearchResults }) => {
     const goToHome = () => {
         navigate('/')
     }
-    const handleSearchChange = (e) => {
-        const newSearchText = e.target.value;
-        setSearchText(newSearchText);
-        onSearchResults(newSearchText); // Pass the latest input value
+    const handleSearchChange = async (e) => {
+        const query = e.target.value;
+        setSearchText(query);
+
+        if (query.length > 0) {
+            try {
+                const fetchedSuggestions = await SuggestionByText(query);
+                setSuggestions(fetchedSuggestions.autocomplete_terms || []); // Default to an empty array if undefined
+                setIsSuggestionsVisible(true);
+            } catch (error) {
+                console.error('Error fetching suggestions:', error);
+                setSuggestions([]);
+                setIsSuggestionsVisible(false); // Hide suggestions on error
+            }
+        } else {
+            setSuggestions([]);
+            setIsSuggestionsVisible(false);
+        }
+
+        onSearchResults(query); // Pass the latest input value
+    };
+
+
+    const handleSuggestionSelect = (suggestion) => {
+        setSearchText(suggestion.name);
+        setSuggestions([]);
+        setIsSuggestionsVisible(false);
+        onSearchResults(suggestion); // Notify parent component about the selection
     };
 
 
@@ -79,7 +105,17 @@ export const NavBar = ({ onSearchResults }) => {
                             className="search-input"
                             value={searchText}
                             onChange={handleSearchChange}
+                            list="suggestions-list"
                         />
+                        {isSuggestionsVisible && suggestions.length > 0 && (
+                            <datalist id="suggestions-list">
+                                {suggestions.map((suggestion, index) => (
+                                    <option key={index} value={suggestion.name}>
+                                        {suggestion.name}
+                                    </option>
+                                ))}
+                            </datalist>
+                        )}
                         {smartSearch && (
                             <label htmlFor="file-upload" className="file-upload-label">
                                 <svg

@@ -42,3 +42,18 @@ export const searchProductByText = async (query, smartsearchx = 'off', locationQ
         throw error;
     }
 };
+
+
+
+export const SuggestionByText = async (query) => {
+    try {
+        const response = await axiosPublic({
+            url: `/autosuggest/?query_string=${encodeURIComponent(query)}`,
+            method: 'GET',
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching suggestions:', error.response ? error.response.data : error.message);
+        return [];
+    }
+};
