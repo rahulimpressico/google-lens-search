@@ -8,14 +8,21 @@ import { NavBar } from './Navbar/Navbar';
 import { Footer } from './components/footer';
 import { searchProductByText } from './api'; // Adjust the path as needed
 import { SearchResults } from './components/SearchResult/js/SearchResult';
+import { Hourglass } from 'react-loader-spinner';
+
+
+function Loader() {
+  return <div className="loader">Loading...</div>;
+}
 
 function App() {
   const [results, setResults] = useState([]);
   const [searchText, setSearchText] = useState('');
   const debounceTimeout = useRef(null);
+  const [loading, setLoading] = useState(false);
+
 
   const handleSearchChange = (text) => {
-    console.log(text)
     setSearchText(text);
 
     if (debounceTimeout.current) {
@@ -25,16 +32,20 @@ function App() {
     debounceTimeout.current = setTimeout(async () => {
       if (text.length > 2) {
         try {
+          setLoading(true);
           const response = await searchProductByText(text);
-          setResults(response.results); // Assuming response.results contains the search results
+          setResults(response.results);
         } catch (error) {
           console.error('Error during search:', error);
           setResults([]);
+        } finally {
+          setLoading(false);
         }
       } else {
         setResults([]);
+        setLoading(false);
       }
-    }, 200); // Adjusted debounce time to 300ms for better UX
+    }, 200);
   };
 
 
@@ -45,7 +56,17 @@ function App() {
 
         <Routes>
           <Route path="/" element={
-            results.length > 0 ? (
+            loading ? (
+              <Hourglass
+                visible={true}
+                height="680"
+                width="80"
+                ariaLabel="hourglass-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+                colors={['#306cce', '#72a1ed']}
+              />
+            ) : searchText.length > 2 ? (
               <SearchResults results={results} />
             ) : (
               <section>

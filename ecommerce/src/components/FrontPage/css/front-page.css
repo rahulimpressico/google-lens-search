@@ -35,6 +35,7 @@
   transition: opacity .15s ease;
   margin-left: -2.5rem;
 }
+
 .carousel-control-next span:hover{
   background-color: silver;
 }
@@ -65,37 +66,6 @@
   position: relative;
 }
 
-.RowImage{
-  font-size: 100%;
-  font-style: inherit;
-  font-weight: inherit;
-  margin: 0;
-  outline: 0;
-  padding: 0;
-  vertical-align: baseline;
-}
-
-.Rows{
-  display: flex;
-    -ms-flex-wrap: wrap;
-    width: 350px;
-    flex-wrap: wrap;
-}
-
-.rImage{
-  flex: 0 0 100%;
-  max-width: 60%;
-  height: 130px;
-  margin-bottom: 15px;
-  position: relative;
-  width: 100%;
-}
-
-.categoryimage{
-  border-radius: 50%;
-    border: 1px solid #f4f4f4;
-    margin-right: 10px;
-}
 
 .second-row{
   background-color: rgba(201,238,255,0.35);
@@ -121,11 +91,4 @@
 
 .text-center.mb-4 {
   font-size: 16px;
-}
-
-@media (max-width: 768px) {
-  .category-row .categories {
-    font-size: 12px;
-    padding: 3px 0;
-  }
 }

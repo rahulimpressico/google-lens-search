@@ -86,3 +86,4 @@
 .image-container:hover .product-image {
     transform: translate(-50%, -50%) scale(0.95); /* Slightly scale down the image */
 }
+

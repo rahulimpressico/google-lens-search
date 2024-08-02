@@ -3,8 +3,7 @@
 }
 
 .product-image img {
-    width: 100%;
-    height: auto;
+   margin-top: 20px;
     display: block;
 }
 
@@ -60,10 +59,21 @@
 .rating {
     margin-top: 10px;
     color: #ff0 !important;
+    font-size: medium;
   }
   
 
 .description{
     font-size: 1.5em;
 
+}
+
+
+
+.fixed-image-size {
+    width: 100%; 
+    height: auto; 
+    max-width: 300px; 
+    max-height: 500px;
+    object-fit: contain; 
 }

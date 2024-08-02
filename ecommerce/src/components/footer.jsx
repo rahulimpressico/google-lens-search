@@ -5,9 +5,9 @@ import Col from "react-bootstrap/Col";
 import { Card } from "react-bootstrap";
 import { useState, useEffect } from "react";
 
-const Footer = () => {
+export const Footer = () => {
   const social = ["Facebook", "Twitter", "Instagram", "Whatsapp"];
-  const offlineStores = ["Delhi", "Chandigarh", "Indore", "Ahmedabad"];
+  const offlineStores = ["TEXAS, USA", "TORONTO, CANADA", "LONDON, UK", "NOIDA, INDIA"];
   const usefulLinks = [
     "Refund Policy",
     "Order Details",
@@ -32,13 +32,13 @@ const Footer = () => {
   ];
 
   const contactInfo = [
-    "Address: 3548 Columbia Mine Road,",
-    "Wheeling, West Virginia",
-    "26003",
-    "Contact : 304-559-3023",
+    "Address: C – 1, Sector 7 NOIDA, UP",
+    "Wheeling, NOIDA",
+    "201301",
+    "Contact : (+91) 120 419-0000",
     "304-650-2694",
-    "E-mail : shopnow@store.com",
-    "contact@top.com",
+    "E-mail : rahul.katoch@impressico.com",
+    "contact@impressico.com",
   ];
 
   const [activeLink, setActiveLink] = useState("");
@@ -455,11 +455,11 @@ const Footer = () => {
           </Col>
         </Row>
         <p style={{ fontSize: "smaller" }}>
-          © 2024 Big Store Electro Designed by Themehunk
+          © 2024 Impressico Store Designed by Rahul Katoch
         </p>
       </Container>
     </div>
   );
 };
 
-export default Footer;
+

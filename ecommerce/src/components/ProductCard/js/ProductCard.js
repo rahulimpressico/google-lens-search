@@ -320,10 +320,10 @@ const ProductCard = () => {
                                                             <div className="product-info">
                                                                 <span>{product.title}</span>
                                                                 <div className="product-pricing">
-                                                                    {product.originalPrice > 0 && <span className="original-price">£{product.originalPrice}</span>}
-                                                                    <span className="discounted-price">£{product.discountedPrice}</span>
+                                                                    {product.originalPrice > 0 && <span className="original-price">₹{product.originalPrice}</span>}
+                                                                    <span className="discounted-price">₹{product.discountedPrice}</span>
                                                                 </div>
-                                                                <div className="discount">--£{discount}</div>
+                                                                <div className="discount">--₹{discount}</div>
                                                                 <div className="rating">
                                                                     {'★'.repeat(product.rating)}{'☆'.repeat(5 - product.rating)}
                                                                 </div>
@@ -442,10 +442,10 @@ const ProductCard = () => {
                                                         <div className="product-info">
                                                             <span>{product.name}</span>
                                                             <div className="product-pricing">
-                                                                {product.originalPrice > 0 && <span className="original-price">£{product.actual_price}</span>}
-                                                                <span className="discounted-price">£{product.discount_price}</span>
+                                                                {product.originalPrice > 0 && <span className="original-price">₹{product.actual_price}</span>}
+                                                                <span className="discounted-price">₹{product.discount_price}</span>
                                                             </div>
-                                                            {product.discount && <div className="discount">-£{product.discount}</div>}
+                                                            {product.discount && <div className="discount">-₹{product.discount}</div>}
                                                             <div className="rating">
                                                                 {'★'.repeat(product.ratings)}{'☆'.repeat(5 - product.ratings)}
                                                             </div>
