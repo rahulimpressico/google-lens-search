@@ -110,13 +110,18 @@ export const NavBar = ({ onSearchResults }) => {
                             list="suggestions-list"
                         />
                         {isSuggestionsVisible && suggestions.length > 0 && (
-                            <datalist id="suggestions-list">
-                                {suggestions.map((suggestion, index) => (
-                                    <option key={index} value={suggestion.name}>
-                                        {suggestion.name}
-                                    </option>
-                                ))}
-                            </datalist>
+                            <div className='suggessions-list' >
+                                {
+                                    suggestions.map(c => <div className='list-item'>
+                                        <img src={c.image_url} alt=''/>
+                                        
+                                        <div className='__row'>
+                                            <p>{c.name}</p>
+                                            <h6>{c.main_category}</h6>
+                                        </div>
+                                    </div>)
+                                }
+                            </div>
                         )}
                         {smartSearch && (
                             <label htmlFor="file-upload" className="file-upload-label">
