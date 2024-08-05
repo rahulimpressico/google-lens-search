@@ -173,6 +173,7 @@
   border-bottom: 0px;
 }
 
+
 .list-item img {
   width: 36px;
   height: 36px;
@@ -195,7 +196,7 @@
 .list-item h6 {
   font-size: 12px;
   font-weight: bolder;
-  color: #3d3f9f;
+  color: #2b2ee4;
 }
 
 .suggessions-list {
